@@ -1,0 +1,42 @@
+ru:
+  errors:
+    format: "%{message} (ошибка в поле \"%{attribute}\")" # http://stackoverflow.com/a/7655617
+  activerecord:
+    errors:
+      messages:
+        record_invalid: "Значения указаны с ошибкой"
+      models:
+        st_routes/category:
+          attributes:
+            slug:
+              blank: "Не указан URL"
+              too_long: "URL не должен превышать %{count} символов"
+              taken: "Категория с URL \"%{value}\" уже существует"
+            title:
+              blank: "Не указан заголовок"
+              too_long: "Заголовок не должен превышать %{count} символов"
+            controller:
+              blank: "Не указано имя контроллера"
+              too_long: "Имя контроллера не должно превышать %{count} символов"
+              taken: "Базовый контроллер \"%{value}\" уже существует"
+            in_path:
+              inclusion: "Дочерняя категория не может быть скрыта из URL"
+
+        st_routes/page:
+          attributes:
+            slug:
+              blank: "Не указан URL"
+              too_long: "URL не должен превышать %{count} символов"
+              taken: "Категория с URL \"%{value}\" уже существует"
+            title:
+              blank: "Не указан заголовок"
+              too_long: "Заголовок не должен превышать %{count} символов"
+            controller:
+              blank: "Не указано имя контроллера"
+              too_long: "Имя контроллера не должно превышать %{count} символов"
+              taken: "Базовый контроллер \"%{value}\" уже существует"
+
+        st_routes/page_link:
+          attributes:
+            category_url:
+              required: "???????????????"

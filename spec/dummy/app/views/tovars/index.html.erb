@@ -1,0 +1,23 @@
+<h1><%= StRoutes::Category.where(id: params[:category_id]).first.title %></h1>
+
+<h2>Категории</h2>
+
+<ul>
+  <% @categories.each do |one| %>
+      <li>
+        <%= one.category.title %>&nbsp;<%= link_to(one.full_url, one.full_url) %>
+      </li>
+  <% end %>
+</ul>
+<br>
+
+<h2>Страницы</h2>
+
+<ul>
+  <% @pages.each do |url, page| %>
+      <li>
+        <%= page.title %>&nbsp;<%= link_to(url, url) %>
+      </li>
+  <% end %>
+</ul>
+
