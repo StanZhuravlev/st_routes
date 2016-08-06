@@ -3,8 +3,8 @@ module StRoutes
     validates :title, presence: true
     validates :slug, presence: true
     validates :controller, presence: true
-    validates :title, length: {maximum: 250}
-    validates :slug, length: {maximum: 250}
+    validates :title, length: {maximum: 1024}
+    validates :slug, length: {maximum: 1024}
     validates :controller, length: {maximum: 64}
     validates :slug, uniqueness: true
     validates :controller, uniqueness: true, if: Proc.new { |c| c.is_root }, on: :create
@@ -12,7 +12,16 @@ module StRoutes
 
     before_validation :generate_slug
     before_save :generate_slug
+    after_save :generate_short_slug
     after_save :rebuild_categories_urls
+
+    def generate_slug
+      StRoutes::URL::Slug.generate_slug(self)
+    end
+
+    def generate_short_slug
+      StRoutes::URL::Slug.generate_short_slug(self)
+    end
 
     def rebuild_categories_urls
       builder = StRoutes::URL::Builder.new

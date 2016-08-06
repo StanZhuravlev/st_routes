@@ -18,12 +18,12 @@ Gem::Specification.new do |s|
 
   s.test_files = Dir["spec/**/*"] # https://www.viget.com/articles/rails-engine-testing-with-rspec-capybara-and-factorygirl
 
-  s.add_dependency "rails", "~> 5.0.0"
+  s.add_dependency "rails", '~> 5.0', '>= 5.0.0'
 
-  s.add_development_dependency "sqlite3"
+  s.add_development_dependency "sqlite3", "~> 0"
   s.add_development_dependency 'rspec-rails'
   s.add_development_dependency 'factory_girl_rails'
   s.add_development_dependency 'debase'
   s.add_development_dependency 'ruby-debug-ide'
-  s.add_development_dependency 'database_cleaner'
+  s.add_development_dependency 'database_cleaner', "~> 0"
 end

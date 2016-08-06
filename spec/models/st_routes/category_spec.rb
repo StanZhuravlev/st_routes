@@ -36,7 +36,7 @@ module StRoutes
     it "Запрет создания длинных заголовков", skip_clean: true do
       item = build(:st_routes_category, title: "Тест длинного заголовка" * 100, controller: "long_title")
       expect(item).not_to be_valid
-      expect(item.errors.full_messages.first).to include("250")
+      expect(item.errors.full_messages.first).to include("1024")
     end
 
     it "Запрет создания еще одной корневой директории", skip_clean: true do

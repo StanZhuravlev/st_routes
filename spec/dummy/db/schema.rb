@@ -13,18 +13,20 @@
 ActiveRecord::Schema.define(version: 20160729183311) do
 
   create_table "st_routes_categories", force: :cascade do |t|
-    t.string   "controller",  limit: 64,  default: ""
-    t.boolean  "is_root",                 default: false
-    t.boolean  "in_path",                 default: false
-    t.string   "title",       limit: 250, default: ""
-    t.string   "slug",        limit: 250, default: ""
-    t.integer  "pages_count",             default: 0
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
+    t.string   "controller",  limit: 64,   default: ""
+    t.boolean  "is_root",                  default: false
+    t.boolean  "in_path",                  default: false
+    t.string   "title",       limit: 1024, default: ""
+    t.string   "slug",        limit: 1024, default: ""
+    t.string   "short_slug",  limit: 1024, default: ""
+    t.integer  "pages_count",              default: 0
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
     t.index ["controller"], name: "index_st_routes_categories_on_controller"
     t.index ["in_path"], name: "index_st_routes_categories_on_in_path"
     t.index ["is_root"], name: "index_st_routes_categories_on_is_root"
     t.index ["pages_count"], name: "index_st_routes_categories_on_pages_count"
+    t.index ["short_slug"], name: "index_st_routes_categories_on_short_slug"
     t.index ["slug"], name: "index_st_routes_categories_on_slug"
   end
 
@@ -38,14 +40,15 @@ ActiveRecord::Schema.define(version: 20160729183311) do
   end
 
   create_table "st_routes_category_urls", force: :cascade do |t|
-    t.string   "controller",   limit: 64,  default: ""
-    t.integer  "category_id",              default: 0
-    t.boolean  "is_canonical",             default: false
-    t.string   "full_url",     limit: 250, default: ""
+    t.string   "controller",   limit: 64,   default: ""
+    t.integer  "category_id",               default: 0
+    t.boolean  "is_canonical",              default: false
+    t.string   "full_url",     limit: 1024, default: ""
+    t.string   "short_url",    limit: 1024, default: ""
     t.text     "breadcrumb"
-    t.boolean  "is_new",                   default: true
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
+    t.boolean  "is_new",                    default: true
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
     t.index ["category_id"], name: "index_st_routes_category_urls_on_category_id"
     t.index ["controller"], name: "index_st_routes_category_urls_on_controller"
     t.index ["full_url"], name: "index_st_routes_category_urls_on_full_url"
@@ -64,14 +67,16 @@ ActiveRecord::Schema.define(version: 20160729183311) do
   end
 
   create_table "st_routes_pages", force: :cascade do |t|
-    t.string   "title",        limit: 250, default: ""
-    t.string   "slug",         limit: 250, default: ""
-    t.string   "controller",   limit: 64,  default: ""
-    t.boolean  "is_published",             default: true
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
+    t.string   "title",        limit: 1024, default: ""
+    t.string   "slug",         limit: 1024, default: ""
+    t.string   "short_slug",   limit: 1024, default: ""
+    t.string   "controller",   limit: 64,   default: ""
+    t.boolean  "is_published",              default: true
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
     t.index ["controller"], name: "index_st_routes_pages_on_controller"
     t.index ["is_published"], name: "index_st_routes_pages_on_is_published"
+    t.index ["short_slug"], name: "index_st_routes_pages_on_short_slug"
     t.index ["slug"], name: "index_st_routes_pages_on_slug"
   end
 
