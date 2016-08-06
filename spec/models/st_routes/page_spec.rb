@@ -111,5 +111,38 @@ module StRoutes
       expect(parser.type).to eq(:page)
     end
 
+    it "Тест canonical" do
+      # Создаем категорию для статических страниц
+      category = build(:st_routes_category, title: "Контент", controller: "content", in_path: true)
+      expect(category).to be_valid
+      expect(category.slug).to eq "kontent"
+      category.save
+
+      page = build(:st_routes_page, title: "О магазине", controller: :content)
+      expect(page).to be_valid
+      expect(page.slug).to eq "o-magazine"
+      page.save
+
+      parser = StRoutes::URL::Parser.new("/kontent/o-magazine")
+      expect(parser.type).to eq(:page)
+      page = StRoutes::Page.where(id: parser.page_id).first
+
+      url = StRoutes::Canonical.url_for(category, page, host: "http://site.com")
+      expect(url).to eq("http://site.com/kontent/o-magazine")
+
+      category.in_path = false
+      category.save
+
+      url = StRoutes::Canonical.url_for(category, page, host: "http://site.com")
+      expect(url).to eq("http://site.com/o-magazine")
+
+      category.in_path = true
+      category.save
+
+      url = StRoutes::Canonical.url_for(category, nil, host: "http://site.com")
+      expect(url).to eq("http://site.com/kontent")
+
+    end
+
   end
 end
