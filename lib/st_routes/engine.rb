@@ -1,3 +1,7 @@
+class Engine
+  # Monkey patch - issue with ActiveAdmin
+end
+
 module StRoutes
   class Engine < ::Rails::Engine
     isolate_namespace StRoutes
