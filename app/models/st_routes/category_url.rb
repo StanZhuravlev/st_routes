@@ -6,7 +6,7 @@ module StRoutes
 
     def self.route_by_url(path)
       url = ('/' + path.mb_chars.downcase.to_s).squeeze('/')
-      StRoutes::CategoryUrl.includes(:category).where(full_url: url).first
+      StRoutes::CategoryUrl.eager_load(:category).where(full_url: url).first
     end
 
     def self.route_to_url(route)

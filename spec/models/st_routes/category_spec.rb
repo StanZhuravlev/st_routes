@@ -90,8 +90,8 @@ module StRoutes
           "/katalog"
       ]
       paths.each do |p|
-        path = StRoutes::CategoryUrl.route_by_url(p)
-        expect(path).not_to be_nil, "1. Ожидалось, что путь #{p.inspect} существует при in_path=true"
+        path = StRoutes::URL::Parser.new(p)
+        expect(path.type).to eq(:category), "1. Ожидалось, что путь #{p.inspect} существует при in_path=true"
       end
     end
 

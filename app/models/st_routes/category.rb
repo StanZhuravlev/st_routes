@@ -10,6 +10,8 @@ module StRoutes
     validates :controller, uniqueness: true, if: Proc.new { |c| c.is_root }, on: :create
     validates :in_path, inclusion: {in: [true]}, if: Proc.new { |c| !c.is_root }
 
+    has_many :category_urls, foreign_key: 'category_id'
+
     before_validation :generate_slug
     before_save :generate_slug
     after_save :generate_short_slug
