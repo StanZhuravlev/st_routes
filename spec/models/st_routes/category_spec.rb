@@ -153,6 +153,10 @@ module StRoutes
       end
     end
 
+    it "Проверка корректности eager_load", skip_clean: true do
+      sql = StRoutes::CategoryUrl.eager_load(:category).where(controller: 'articles', is_root: true).to_sql
+      expect(sql).to include "= \"st_routes_category_urls\".\"category_id"
+    end
 
-  end
+    end
 end
