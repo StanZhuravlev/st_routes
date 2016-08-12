@@ -18,7 +18,6 @@ ActiveRecord::Schema.define(version: 20160729183311) do
     t.boolean  "in_path",                  default: false
     t.string   "title",       limit: 1024, default: ""
     t.string   "slug",        limit: 1024, default: ""
-    t.string   "short_slug",  limit: 1024, default: ""
     t.integer  "pages_count",              default: 0
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
@@ -26,17 +25,17 @@ ActiveRecord::Schema.define(version: 20160729183311) do
     t.index ["in_path"], name: "index_st_routes_categories_on_in_path"
     t.index ["is_root"], name: "index_st_routes_categories_on_is_root"
     t.index ["pages_count"], name: "index_st_routes_categories_on_pages_count"
-    t.index ["short_slug"], name: "index_st_routes_categories_on_short_slug"
     t.index ["slug"], name: "index_st_routes_categories_on_slug"
   end
 
   create_table "st_routes_category_links", force: :cascade do |t|
-    t.integer  "parent_id",  default: 0
-    t.integer  "child_id",   default: 0
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.index ["child_id"], name: "index_st_routes_category_links_on_child_id"
-    t.index ["parent_id"], name: "index_st_routes_category_links_on_parent_id"
+    t.integer  "category_id"
+    t.integer  "parent_category_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["category_id", "parent_category_id"], name: "category_child_parent_idx", unique: true
+    t.index ["category_id"], name: "index_st_routes_category_links_on_category_id"
+    t.index ["parent_category_id"], name: "index_st_routes_category_links_on_parent_category_id"
   end
 
   create_table "st_routes_category_urls", force: :cascade do |t|
@@ -69,14 +68,12 @@ ActiveRecord::Schema.define(version: 20160729183311) do
   create_table "st_routes_pages", force: :cascade do |t|
     t.string   "title",        limit: 1024, default: ""
     t.string   "slug",         limit: 1024, default: ""
-    t.string   "short_slug",   limit: 1024, default: ""
     t.string   "controller",   limit: 64,   default: ""
     t.boolean  "is_published",              default: true
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
     t.index ["controller"], name: "index_st_routes_pages_on_controller"
     t.index ["is_published"], name: "index_st_routes_pages_on_is_published"
-    t.index ["short_slug"], name: "index_st_routes_pages_on_short_slug"
     t.index ["slug"], name: "index_st_routes_pages_on_slug"
   end
 

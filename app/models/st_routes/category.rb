@@ -12,26 +12,27 @@ module StRoutes
 
     has_many :category_urls, foreign_key: 'category_id'
 
-    before_validation :generate_slug
-    before_save :generate_slug
-    after_save :generate_short_slug
+    has_many :category_links
+    has_many :parent_categories, through: :category_links, dependent: :destroy
+    has_many :categories, through: :category_links, dependent: :destroy
+
     after_save :rebuild_categories_urls
 
     def generate_slug
-      StRoutes::URL::Slug.generate_slug(self)
-    end
-
-    def generate_short_slug
-      StRoutes::URL::Slug.generate_short_slug(self)
+      self.slug = StRoutes::URL::Slug.generate_slug(StRoutes::Category, self.title, self.slug)
     end
 
     def rebuild_categories_urls
-      builder = StRoutes::URL::Builder.new
-      builder.rebuild_categories_urls
+      if slug_changed? || in_path_changed? || is_root_changed?
+        builder = StRoutes::URL::Builder.new
+        builder.rebuild_categories_urls
+      end
     end
 
     def add_subcategory(subitem)
-      StRoutes::CategoryLink.where(parent_id: id, child_id: subitem.id).first_or_create
+      StRoutes::CategoryLink.where(category_id: subitem.id, parent_category_id: id).first_or_create
+      builder = StRoutes::URL::Builder.new
+      builder.rebuild_categories_urls
     end
 
     def self.root(controller)
@@ -44,7 +45,7 @@ module StRoutes
 
     def update_pages_count
       self.pages_count = StRoutes::PageLink.where(category_id: id).count
-      ids = StRoutes::CategoryLink.select(:child_id).where(parent_id: id).pluck(:child_id)
+      ids = StRoutes::CategoryLink.select(:category_id).where(parent_category_id: id).pluck(:category_id)
       StRoutes::Category.where(id: ids).find_each do |one|
         one.update_pages_count
         self.pages_count += one.pages_count

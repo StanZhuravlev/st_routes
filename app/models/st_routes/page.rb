@@ -11,17 +11,10 @@ module StRoutes
     has_many :page_links
     has_many :category_urls, through: :page_links
 
-    before_validation :generate_slug
-    before_save :generate_slug
-    after_save :generate_short_slug
     after_save :connect_to_canonical
 
     def generate_slug
-      StRoutes::URL::Slug.generate_slug(self)
-    end
-
-    def generate_short_slug
-      StRoutes::URL::Slug.generate_short_slug(self)
+      self.slug = StRoutes::URL::Slug.generate_slug(StRoutes::Page, self.title, self.slug)
     end
 
     def connect_to_canonical

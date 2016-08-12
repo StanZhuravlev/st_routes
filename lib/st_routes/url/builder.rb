@@ -9,7 +9,7 @@ module StRoutes
       #
       # @return [None] нет
       def rebuild_categories_urls
-        roots = StRoutes::Category.where(is_root: true)
+        roots = StRoutes::Category.roots
         StRoutes::CategoryUrl.transaction do
           roots.each do |root|
             canonical = create_category_full_url(root, "/", [])
@@ -24,7 +24,7 @@ module StRoutes
 
 
       def rebuild_subcategories_urls(record) #:nodoc:
-        ids = StRoutes::CategoryLink.where(parent_id: record.category_id).pluck(:child_id)
+        ids = StRoutes::CategoryLink.where(parent_category_id: record.category_id).pluck(:category_id)
         items = StRoutes::Category.where(id: ids)
         items.each do |one|
           res = create_category_full_url(one, record.full_url, record.breadcrumb)

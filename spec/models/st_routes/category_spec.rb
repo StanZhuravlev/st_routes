@@ -3,7 +3,6 @@ require 'rails_helper'
 module StRoutes
   RSpec.describe Category, type: :model do
 
-
     it "Проверка создания корневых путей", skip_clean: true do
       %w(Статьи Новости Вопросы\ и\ ответы Страницы Отзывы Каталог\ страниц Каталог).each do |title|
         expect(Category.where(title: title).first).not_to be_nil
@@ -158,5 +157,13 @@ module StRoutes
       expect(sql).to include "= \"st_routes_category_urls\".\"category_id"
     end
 
+    it "Проверка создания связей между категориями через category_links" do
+      item = StRoutes::Category.where(slug: 'yunnyyi-tehnik').first
+      expect(item).not_to be_nil
+      childs = item.parent_categories.pluck(:slug)
+      expect(childs).to include "zhurnaly"
+      expect(childs).to include "periodika"
     end
+
+  end
 end

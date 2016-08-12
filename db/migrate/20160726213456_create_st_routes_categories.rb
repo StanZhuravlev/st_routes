@@ -6,7 +6,6 @@ class CreateStRoutesCategories < ActiveRecord::Migration[5.0]
       t.boolean     :in_path,       default: false
       t.string      :title,         default: '',      limit: 1024
       t.string      :slug,          default: '',      limit: 1024
-      t.string      :short_slug,    default: '',      limit: 1024
       t.integer     :pages_count,   default: 0
 
       t.timestamps
@@ -16,7 +15,6 @@ class CreateStRoutesCategories < ActiveRecord::Migration[5.0]
     add_index :st_routes_categories, :is_root
     add_index :st_routes_categories, :in_path
     add_index :st_routes_categories, :slug
-    add_index :st_routes_categories, :short_slug
     add_index :st_routes_categories, :pages_count
   end
 end

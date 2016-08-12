@@ -141,7 +141,6 @@ module StRoutes
 
       url = StRoutes::Canonical.url_for(category, nil, host: "http://site.com")
       expect(url).to eq("http://site.com/kontent")
-
     end
 
   end
