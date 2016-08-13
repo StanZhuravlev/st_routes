@@ -1,12 +1,11 @@
 class CreateStRoutesCategoryLinks < ActiveRecord::Migration[5.0]
   def change
     create_table :st_routes_category_links do |t|
-      t.references :category, index: true, foreign_key: true
-      t.references :parent_category, index: true, foreign_key: true
+      t.integer  :category_id,  default: 0
+      t.integer  :parent_category_id,  default: 0
 
       t.timestamps
     end
-
 
     add_foreign_key :st_routes_category_links, :categories, column: :category_id
     add_foreign_key :st_routes_category_links, :parent_categories, column: :parent_category_id

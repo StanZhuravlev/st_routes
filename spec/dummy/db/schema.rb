@@ -29,13 +29,11 @@ ActiveRecord::Schema.define(version: 20160729183311) do
   end
 
   create_table "st_routes_category_links", force: :cascade do |t|
-    t.integer  "category_id"
-    t.integer  "parent_category_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.integer  "category_id",        default: 0
+    t.integer  "parent_category_id", default: 0
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.index ["category_id", "parent_category_id"], name: "category_child_parent_idx", unique: true
-    t.index ["category_id"], name: "index_st_routes_category_links_on_category_id"
-    t.index ["parent_category_id"], name: "index_st_routes_category_links_on_parent_category_id"
   end
 
   create_table "st_routes_category_urls", force: :cascade do |t|
