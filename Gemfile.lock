@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    st_routes (0.1.9)
+    st_routes (0.1.10)
       rails (~> 5.0, >= 5.0.0)
 
 GEM
