@@ -8,7 +8,7 @@ pages = [
     [ "Cкидка 20%!", :actions ],
     [ "Cкидка 50%!", :actions ],
     [ "Cкидка 70%!", :actions ],
-    [ "Флешка со стразами", :tovars ],
+    [ "Тестовый товар", :tovars ],
 ]
 
 puts
@@ -20,8 +20,10 @@ pages.each do |title, controller|
     next
   end
 
-  record = StRoutes::Page.where(title: title, controller: controller ).first_or_create
+  record = StRoutes::Page.where(title: title, controller: controller ).first_or_initialize
+  record.generate_slug
   if record.valid?
+    record.save
     puts "  #{title.inspect} (#{controller.to_s}): #{record.slug.inspect}"
     record.connect_to_category(category)
   else

@@ -14,9 +14,11 @@ namespace :st_routes do
       Dir.glob(src_folder).each do |file|
         FileUtils.copy_file(file, File.join(dst_folder, File.basename(file)), remove_destination: true)
         puts "Copied templates to \"db/seeds/#{File.basename(file)}\""
-        puts
-        puts "Execute: rails st_routes:install:seed for seed root categories to database"
       end
+      puts
+      puts "Execute:"
+      puts "   rails st_routes:install:seed"
+      puts
     end
 
 

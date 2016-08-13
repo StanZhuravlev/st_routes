@@ -22,9 +22,10 @@ categories = [
 puts
 puts "Создаем категории:"
 categories.each do |title, controller, in_path|
-  record = StRoutes::Category.build( title: title, controller: controller, in_path: in_path, is_root: true )
+  record = StRoutes::Category.new( title: title, controller: controller, in_path: in_path, is_root: true )
   record.generate_slug
   if record.valid?
+    record.save
     puts "  #{title.inspect} (#{controller.to_s}): #{record.slug.inspect}"
   else
     puts "  ERROR: #{title.inspect} (#{controller.to_s})"
