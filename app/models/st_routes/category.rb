@@ -10,11 +10,15 @@ module StRoutes
     validates :controller, uniqueness: true, if: Proc.new { |c| c.is_root }, on: :create
     validates :in_path, inclusion: {in: [true]}, if: Proc.new { |c| !c.is_root }
 
+
     has_many :category_urls, foreign_key: 'category_id'
 
     has_many :category_links
     has_many :parent_categories, through: :category_links, dependent: :destroy
     has_many :categories, through: :category_links, dependent: :destroy
+
+    # For ActiveAdmin prevent ActiveRecord::AssociationTypeMismatch in Admin::CategoriesController
+    accepts_nested_attributes_for :category_links
 
     after_save :rebuild_categories_urls
 
